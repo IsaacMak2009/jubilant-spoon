@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="a9bd980c-3676-4104-b509-c28559c096da" name="更改" comment="2024/1/12 - 2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cam2Lidar.py" beforeDir="false" afterPath="$PROJECT_DIR$/Cam2Lidar.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/chassis.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/chassis.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,22 +32,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.main.executor": "Run",
-    "Python.respeaker.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/root/catkin_ws/devel/lib/python2.7/dist-packages",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.respeaker.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/root/catkin_ws/devel/lib/python2.7/dist-packages&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RdControllerToolWindowsLayoutState" isNewUi="true">
     <layout>
       <window_info id="Space Code Reviews" show_stripe_button="false" />
@@ -56,7 +56,7 @@
       <window_info id="Commit_Guest" show_stripe_button="false" />
       <window_info id="Pull Requests" show_stripe_button="false" />
       <window_info id="Learn" show_stripe_button="false" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.33088666" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.33303782" />
       <window_info id="Commit" order="1" weight="0.33088666" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
@@ -69,7 +69,7 @@
       <window_info anchor="bottom" id="重复项" weight="0.33023483" />
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.3302257" />
       <window_info anchor="bottom" id="Problems View" order="1" weight="0.3302257" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="2" visible="true" weight="0.33023483" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="2" visible="true" weight="0.3338279" />
       <window_info anchor="bottom" id="Services" order="3" weight="0.3302257" />
       <window_info anchor="right" id="Plots" show_stripe_button="false" />
       <window_info anchor="right" id="Endpoints" show_stripe_button="false" />
@@ -137,6 +137,7 @@
       <workItem from="1704796221029" duration="430000" />
       <workItem from="1704970384153" duration="913000" />
       <workItem from="1705052493921" duration="1294000" />
+      <workItem from="1705378471471" duration="434000" />
     </task>
     <task id="LOCAL-00001" summary="2024/1/12 - 2">
       <option name="closed" value="true" />
