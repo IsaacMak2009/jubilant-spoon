@@ -14,8 +14,12 @@ if __name__ == '__main__':
 
     for i in range(4):
         depth = cam.read().astype(int)
-        final += depth
-        time.sleep(0.05)
+        idx = final==0
+        final[idx] = depth[idx]
+        time.sleep(0.1)
+        print("Getting img #"+str(i))
 
-    depth = final / 5
+
+    depth = final
+    print("saving...")
     np.savetxt("depth.txt", depth.astype(int), fmt="%d")

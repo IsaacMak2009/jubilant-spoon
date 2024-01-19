@@ -27,7 +27,7 @@ def rayCasting(image, point, angle_range=(-180, 180), num_rays=360):
         step = 0
         flag = False
         while 0 <= x < width and 0 <= y < height:
-            step += 1
+            step += 2
             pixel = image[int(y), int(x)]
             if pixel != 0:
                 result.append((int(x), int(y)))
@@ -54,7 +54,7 @@ def convertLidarToLaserScan(lidar_data, offset=0):
     k = 360 / leng
     for i in range(leng):
         angle = (int(i*k)+360+offset) % 360
-        new_data[i] = lidar_data[angle] / 900 if lidar_data[angle] != 900 else new_data[i]
+        new_data[i] = lidar_data[angle] * math.sqrt(3) / 5500# if lidar_data[angle] != 900 else new_data[i]
 
     # Set the necessary parameters
     scan_msg.header.stamp = rospy.Time.now()
@@ -85,6 +85,7 @@ def main():
     pub = rospy.Publisher('/scan', LaserScan, queue_size=10)
 
     scan_sub = rospy.Subscriber('/my_scan', LaserScan, scan_callback)
+    rospy.loginfo("waiting...")
     rospy.wait_for_message("/my_scan", LaserScan)
     rospy.sleep(1)
 
@@ -95,21 +96,26 @@ def main():
     print(bg_noise)
     print(cam.read())
 
-    max_diff = 32
+    max_diff = 6
     while not rospy.is_shutdown():
         frame_cnt += 1
         rospy.Rate(10).sleep()
-
-        diff = np.zeros_like(cam.read())
+        frame = cam.read()
+        diff = np.zeros_like(frame)
         diff = diff.astype(np.uint8)
-        diff[np.where(np.abs(cam.read() - bg_noise) > max_diff)] = 255
-
+        err = np.abs(frame - bg_noise) / frame * 100
+        diff[np.where(err > max_diff)] = 255
+        diff[np.where(frame==0)] = 0
+        diff[:35] = 0
+        diff = diff[:,::-1]
+        if frame_cnt == 5:
+            print(diff)
         diff = cv2.medianBlur(diff, 7)
         diff = cv2.medianBlur(diff, 3)
-        diff = diff[::-1, ::-1]
+
 
         rgb = cv2.cvtColor(diff, cv2.COLOR_GRAY2RGB)
-        x, y = 320, 359
+        x, y = 320, 640
 
         result, distance = rayCasting(diff, (x, y))
         for i in range(len(result) - 1):
@@ -119,7 +125,7 @@ def main():
             else:
                 cv2.line(rgb, (x, y), (x2, y2), (255, 0, 0), 1)
 
-        scan_msg = convertLidarToLaserScan(distance)
+        scan_msg = convertLidarToLaserScan(distance, offset=90)
         pub.publish(scan_msg)
 
         cv2.imshow("image", rgb)
