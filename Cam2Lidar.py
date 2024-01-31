@@ -13,7 +13,7 @@ NODE_NAME = "camera_node"
 scan_data: LaserScan= LaserScan()
 
 @nb.njit
-def rayCasting(image, point, angle_range=(-180, 180), num_rays=360):
+def rayCasting(image, point, angle_range=(-180, 0), num_rays=180):
     height, width = image.shape[:2]
     rays = np.linspace(angle_range[0], angle_range[1], num_rays)
 
@@ -41,7 +41,7 @@ def rayCasting(image, point, angle_range=(-180, 180), num_rays=360):
         if not flag:
             result.append((int(x), int(y)))
             distance.append(900)
-
+    for i in range(360-angle_range[1]+angle_range[0]): distance.append(900)
     return result, distance
 
 
@@ -86,7 +86,12 @@ def main():
 
     scan_sub = rospy.Subscriber('/my_scan', LaserScan, scan_callback)
     rospy.loginfo("waiting...")
-    rospy.wait_for_message("/my_scan", LaserScan)
+    try:
+        rospy.wait_for_message("/my_scan", LaserScan, timeout=5)
+        use_lidar = True
+    except rospy.ROSException:
+        rospy.logwarn("No lidar")
+        use_lidar = False
     rospy.sleep(1)
 
     frame_cnt = 0
@@ -96,17 +101,17 @@ def main():
     print(bg_noise)
     print(cam.read())
 
-    max_diff = 6
+    max_diff = 25
     while not rospy.is_shutdown():
         frame_cnt += 1
         rospy.Rate(10).sleep()
         frame = cam.read()
         diff = np.zeros_like(frame)
         diff = diff.astype(np.uint8)
-        err = np.abs(frame - bg_noise) / frame * 100
-        diff[np.where(err > max_diff)] = 255
-        diff[np.where(frame==0)] = 0
-        diff[:35] = 0
+        err = np.abs(frame - bg_noise) 
+        diff[err > max_diff] = 255
+        diff[frame==0] = 0
+        diff[frame>1050] = 0
         diff = diff[:,::-1]
         if frame_cnt == 5:
             print(diff)
@@ -115,7 +120,7 @@ def main():
 
 
         rgb = cv2.cvtColor(diff, cv2.COLOR_GRAY2RGB)
-        x, y = 320, 640
+        x, y = 320, 479
 
         result, distance = rayCasting(diff, (x, y))
         for i in range(len(result) - 1):
