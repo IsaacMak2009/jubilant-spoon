@@ -10,7 +10,8 @@ from core.camera import BaseRosCamera
 
 NODE_NAME = "camera_node"
 
-scan_data: LaserScan= LaserScan()
+scan_data: LaserScan = LaserScan()
+
 
 @nb.njit
 def rayCasting(image, point, angle_range=(-180, 0), num_rays=180):
@@ -19,30 +20,23 @@ def rayCasting(image, point, angle_range=(-180, 0), num_rays=180):
 
     result = []
     distance = []
+    point = np.array(point)
     for angle in rays:
         theta = np.radians(angle)
         direction = np.array([np.cos(theta), np.sin(theta)])
 
-        x, y = point
-        step = 0
-        flag = False
-        while 0 <= x < width and 0 <= y < height:
-            step += 2
-            pixel = image[int(y), int(x)]
-            if pixel != 0:
+        for step in range(900):
+            x, y = map(int, point + direction * step)
+            if image.shape[1] > x >= 0 and 0 <= y < image.shape[0]:
+                if image[y, x]:
+                    result.append((int(x), int(y)))
+                    distance.append(step)
+                    break
+            elif not (image.shape[1] > x >= 0 or y <= 0):
                 result.append((int(x), int(y)))
-                distance.append(step)
-                flag = True
+                distance.append(900)
                 break
-
-            x += direction[0]
-            y += direction[1]
-
-        if not flag:
-            result.append((int(x), int(y)))
-            distance.append(900)
-    for i in range(360-angle_range[1]+angle_range[0]): distance.append(900)
-    return result, distance
+        return result, distance
 
 
 def convertLidarToLaserScan(lidar_data, offset=0):
@@ -53,8 +47,9 @@ def convertLidarToLaserScan(lidar_data, offset=0):
     leng = len(new_data)
     k = 360 / leng
     for i in range(leng):
-        angle = (int(i*k)+360+offset) % 360
-        new_data[i] = lidar_data[angle] * math.sqrt(3) / 5500# if lidar_data[angle] != 900 else new_data[i]
+        angle = (int(i * k) + 360 + offset) % 360
+        if angle <= len(lidar_data) and lidar_data[angle] != 900:
+            new_data[i] = lidar_data[angle] * math.sqrt(3) / 10000
 
     # Set the necessary parameters
     scan_msg.header.stamp = rospy.Time.now()
@@ -72,9 +67,11 @@ def convertLidarToLaserScan(lidar_data, offset=0):
 
     return scan_msg
 
+
 def scan_callback(msg):
     global scan_data
     scan_data = msg
+
 
 def main():
     rospy.init_node(NODE_NAME)
@@ -108,19 +105,17 @@ def main():
         frame = cam.read()
         diff = np.zeros_like(frame)
         diff = diff.astype(np.uint8)
-        err = np.abs(frame - bg_noise) 
+        err = np.abs(frame - bg_noise)
         diff[err > max_diff] = 255
-        diff[frame==0] = 0
-        diff[frame>1050] = 0
-        diff = diff[:,::-1]
+        diff[frame == 0 | frame > 1050] = 0
+        diff = diff[:, ::-1]
         if frame_cnt == 5:
             print(diff)
         diff = cv2.medianBlur(diff, 7)
         diff = cv2.medianBlur(diff, 3)
 
-
         rgb = cv2.cvtColor(diff, cv2.COLOR_GRAY2RGB)
-        x, y = 320, 479
+        x, y = 320, 540
 
         result, distance = rayCasting(diff, (x, y))
         for i in range(len(result) - 1):

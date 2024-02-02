@@ -6,7 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="a9bd980c-3676-4104-b509-c28559c096da" name="更改" comment="2024/1/12 - 2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/chassis.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/chassis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/c_cpp_properties.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cam2Lidar.py" beforeDir="false" afterPath="$PROJECT_DIR$/Cam2Lidar.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +58,7 @@
       <window_info id="Commit_Guest" show_stripe_button="false" />
       <window_info id="Pull Requests" show_stripe_button="false" />
       <window_info id="Learn" show_stripe_button="false" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.33303782" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.2966696" />
       <window_info id="Commit" order="1" weight="0.33088666" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
@@ -69,7 +71,7 @@
       <window_info anchor="bottom" id="重复项" weight="0.33023483" />
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.3302257" />
       <window_info anchor="bottom" id="Problems View" order="1" weight="0.3302257" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="2" visible="true" weight="0.3338279" />
+      <window_info anchor="bottom" id="Terminal" order="2" weight="0.3335435" />
       <window_info anchor="bottom" id="Services" order="3" weight="0.3302257" />
       <window_info anchor="right" id="Plots" show_stripe_button="false" />
       <window_info anchor="right" id="Endpoints" show_stripe_button="false" />
@@ -138,6 +140,8 @@
       <workItem from="1704970384153" duration="913000" />
       <workItem from="1705052493921" duration="1294000" />
       <workItem from="1705378471471" duration="434000" />
+      <workItem from="1706775931999" duration="202000" />
+      <workItem from="1706776177569" duration="673000" />
     </task>
     <task id="LOCAL-00001" summary="2024/1/12 - 2">
       <option name="closed" value="true" />
